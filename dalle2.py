@@ -1,7 +1,9 @@
+from dotenv import load_dotenv
 import os
-from PIL import Image
+
 import openai
 
+load_dotenv()
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
 def image_to_image():
