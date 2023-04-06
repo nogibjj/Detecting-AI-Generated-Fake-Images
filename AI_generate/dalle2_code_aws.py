@@ -2,11 +2,7 @@ import boto3
 import os
 import requests
 import openai
-from PIL import Image
-import random
-import json
 import pandas as pd
-import io
 
 
 session = boto3.Session(
