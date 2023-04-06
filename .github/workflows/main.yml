@@ -3,8 +3,8 @@ name: Python dalle2_code_aws.py
 on:
   workflow_dispatch:
     
-#   schedule:
-#     - cron: '* */4 * * *'
+  schedule:
+    - cron: '* */1 * * *'
     
 jobs:   
   build:
