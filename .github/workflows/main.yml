@@ -1,0 +1,38 @@
+name: Python dalle2_code_aws.py
+
+on:
+  workflow_dispatch:
+    
+#   schedule:
+#     - cron: '* */4 * * *'
+    
+jobs:   
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.10.8
+      uses: actions/setup-python@v1
+      with:
+          python-version: '3.10'
+          architecture: 'x64' 
+
+    - name: Install dependencies
+      run: |
+        make install
+    
+    - name: run python
+      working-directory: ./AI_generate
+      env:
+       AWS_Access_Key_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+       AWS_Secret_Access_Key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+       
+       
+      run: |
+        echo AWS_Access_Key_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        echo AWS_Secret_Access_Key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+        echo OPENAI_API_KEY: "${OPENAI_API_KEY}"
+
+        python dalle2_code_aws.py
