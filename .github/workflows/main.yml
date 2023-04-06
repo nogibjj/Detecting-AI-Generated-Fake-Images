@@ -25,15 +25,14 @@ jobs:
     - name: run python
       working-directory: ./AI_generate
       env:
-       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-       
+       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
        
        
       run: |
-        echo aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        echo aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+        echo AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        echo AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
         echo OPENAI_API_KEY: "${OPENAI_API_KEY}"
 
         python dalle2_code_aws.py
