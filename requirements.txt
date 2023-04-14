@@ -11,3 +11,4 @@ pandas
 retina-face
 torchvision
 umap-learn
+streamlit
