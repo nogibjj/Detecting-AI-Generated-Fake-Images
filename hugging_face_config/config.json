@@ -1,0 +1,11 @@
+{
+    "model": {
+        "name": "my_image_classifier",
+        "description": "A TensorFlow image classification model",
+        "language": "tensorflow",
+        "pipeline_tag": "image-classification"
+    },
+    "tokenizer": null,
+    "training_args": null,
+    "dataset": null
+}
