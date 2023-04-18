@@ -16,12 +16,10 @@ from keras import backend as K
 @st.cache(allow_output_mutation=True)
 def load_models():
     models = {}
-    
-    K.set_image_data_format('channels_last')
-    model = from_pretrained_keras('scottlai/model_v2_fake_image_detection')
-    
-    model.compile(optimizer='adam', loss='binary_crossentropy')
-    models["scottlai/model_v2_fake_image_detection"] = model
+    # # K.set_image_data_format('channels_last')
+    # model = from_pretrained_keras('scottlai/model_v2_fake_image_detection')
+    # model.compile(optimizer='adam', loss='binary_crossentropy')
+    # models["scottlai/model_v2_fake_image_detection"] = model
     
     model = from_pretrained_keras("poojakabber1997/ResNetDallE2Fakes")
     model.compile(optimizer='adam', loss='binary_crossentropy')
@@ -72,11 +70,12 @@ if content_loaded:
     def get_prediction(image, model_key, models):
         model = models[model_key]
 
-        if model_key == "scottlai/model_v2_fake_image_detection":
-            input_shape = (224, 224)
-            channels_first = True
-            model_key = "MobileNetV2 Model"
-        elif model_key == "poojakabber1997/ResNetDallE2Fakes":
+        # if model_key == "scottlai/model_v2_fake_image_detection":
+        #     input_shape = (224, 224)
+        #     channels_first = True
+        #     model_key = "MobileNetV2 Model"
+        # elif model_key == "poojakabber1997/ResNetDallE2Fakes":
+        if model_key == "poojakabber1997/ResNetDallE2Fakes":
             input_shape = (180, 180)
             channels_first = False
             model_key = "ResNet Model"
@@ -90,6 +89,9 @@ if content_loaded:
 
         image = np.expand_dims(image, axis=0)
 
+        if channels_first:
+            image = np.transpose(image, (0, 2, 3, 1))
+
         prediction = model.predict(image)
         print(f"Raw prediction output for {model_key}: {prediction}") 
         real_prob = prediction[0][0]
@@ -102,16 +104,19 @@ if content_loaded:
 
 
 
+
     # Load both models at the beginning
+    K.set_image_data_format('channels_last')
     models = load_models()
+
 
     # Add a new sidebar option for model selection
     model_choice = st.sidebar.radio(
         "Select a model:",
         (
             "AI Human Face Generator",
-            "Real vs AI Human Face Detection - MobileNetV2 Model",
-            "Real vs AI Human Face Detection - RestNet Model"
+            # "Real vs AI Human Face Detection - MobileNetV2 Model",
+            "Real vs AI Human Face Detection"
         ),
     )
 
@@ -140,10 +145,11 @@ if content_loaded:
         # Update the elif clause for Real vs AI Human Face Detection
     elif model_choice.startswith("Real vs AI Human Face Detection"):
         # Determine the selected model and its input shape
-        if model_choice.endswith("MobileNetV2 Model"):
-            model_key = "scottlai/model_v2_fake_image_detection"
-            input_shape = (1, 3, 224, 224)
-        else:
+        # if model_choice.endswith("MobileNetV2 Model"):
+        #     model_key = "scottlai/model_v2_fake_image_detection"
+        #     input_shape = (1, 3, 224, 224)
+        # else:
+        if model_choice.endswith("ResNet Model"):
             model_key = "poojakabber1997/ResNetDallE2Fakes"
             input_shape = (1, 3, 180, 180)
 
@@ -167,6 +173,7 @@ if content_loaded:
             col1, col2 = st.columns([2, 1])
             col1.image(input_image, use_column_width=True)
             col2.write("Prediction Results:")
+            model_key = "poojakabber1997/ResNetDallE2Fakes"
             model_name, prediction, real_prob = get_prediction(uploaded_array, model_key, models)
 
             # Get the prediction probabilities
@@ -185,7 +192,6 @@ if content_loaded:
             else:
                 col2.markdown(f"### {fake_accuracy}")
                 col2.write(f"Real Probability: {fake_probability}")
-
 
 
 
