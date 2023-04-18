@@ -12,3 +12,4 @@ retina-face
 torchvision
 umap-learn
 streamlit
+scikit-learn
