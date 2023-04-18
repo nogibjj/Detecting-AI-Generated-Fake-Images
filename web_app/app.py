@@ -66,21 +66,36 @@ if content_loaded:
         return Image.open(BytesIO(image_data))
 
     # Update the get_prediction function to accept the model's input shape
-    def get_prediction(image, model):
-        input_shape = model.input_shape
-        image = Image.fromarray(image.astype('uint8'), 'RGB').resize(input_shape[1:3])
+    def get_prediction(image, model_key, models):
+        model = models[model_key]
+
+        if model_key == "scottlai/model_v2_fake_image_detection":
+            input_shape = (224, 224)
+            channels_first = True
+            model_key = "MobileNetV2 Model"
+        elif model_key == "poojakabber1997/ResNetDallE2Fakes":
+            input_shape = (180, 180)
+            channels_first = False
+            model_key = "ResNet Model"
+
+        image = Image.fromarray(image.astype('uint8'), 'RGB').resize(input_shape)
         image = np.array(image).astype(np.float32)
         image = image / 255
+
+        if channels_first:
+            image = np.transpose(image, (2, 0, 1))
+
         image = np.expand_dims(image, axis=0)
 
         prediction = model.predict(image)
+        print(f"Raw prediction output for {model_key}: {prediction}") 
         real_prob = prediction[0][0]
         fake_prob = 1 - real_prob
 
         if real_prob > fake_prob:
-            return "Real Human Face", real_prob
+            return model_key, "Real Human Face", real_prob
         else:
-            return "AI Generated Face", fake_prob
+            return model_key, "AI Generated Face", fake_prob
 
 
 
@@ -122,15 +137,16 @@ if content_loaded:
         # Update the elif clause for Real vs AI Human Face Detection
     elif model_choice.startswith("Real vs AI Human Face Detection"):
         # Determine the selected model and its input shape
-        if model_choice.endswith("scottlai"):
+        if model_choice.endswith("MobileNetV2 Model"):
             model_key = "scottlai/model_v2_fake_image_detection"
             input_shape = (1, 3, 224, 224)
         else:
             model_key = "poojakabber1997/ResNetDallE2Fakes"
             input_shape = (1, 3, 180, 180)
 
-        # Use the selected model for predictions
-        model_fake_detection = models[model_key]
+
+        # # Use the selected model for predictions
+        # model_fake_detection = models[model_key]
        
 
         st.title("Real vs AI Human Face Detection")
@@ -148,24 +164,25 @@ if content_loaded:
             col1, col2 = st.columns([2, 1])
             col1.image(input_image, use_column_width=True)
             col2.write("Prediction Results:")
-            prediction, real_prob = get_prediction(uploaded_array, model_fake_detection)
+            model_name, prediction, real_prob = get_prediction(uploaded_array, model_key, models)
 
             # Get the prediction probabilities
             real_prob = real_prob
             fake_prob = 1-real_prob
             
-            real_accuracy = "This is a Real Human Face"
+            real_accuracy = f"This is a Real Human Face ({model_name})"
             real_probability = real_prob 
-        
-            fake_accuracy = "This is a AI Generated Face"
+                
+            fake_accuracy = f"This is an AI Generated Face ({model_name})"
             fake_probability = fake_prob
-            
-            if real_probability > 0.77:
+                    
+            if real_probability > 0.73:
                 col2.markdown(f"### {real_accuracy}")
                 col2.write(f"Real Probability: {real_probability}")
             else:
                 col2.markdown(f"### {fake_accuracy}")
-                col2.write(f"Real Probability: {fake_probability}")
+                col2.write(f"Fake Probability: {fake_probability}")
+
 
 
 
