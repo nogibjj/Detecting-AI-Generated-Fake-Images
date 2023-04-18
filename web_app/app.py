@@ -9,6 +9,7 @@ from io import BytesIO
 from huggingface_hub import from_pretrained_keras
 import numpy as np
 import tensorflow as tf
+from keras import backend as K
 
 
 # Function to load models
@@ -16,7 +17,9 @@ import tensorflow as tf
 def load_models():
     models = {}
     
+    K.set_image_data_format('channels_last')
     model = from_pretrained_keras('scottlai/model_v2_fake_image_detection')
+    
     model.compile(optimizer='adam', loss='binary_crossentropy')
     models["scottlai/model_v2_fake_image_detection"] = model
     
@@ -181,7 +184,7 @@ if content_loaded:
                 col2.write(f"Real Probability: {real_probability}")
             else:
                 col2.markdown(f"### {fake_accuracy}")
-                col2.write(f"Fake Probability: {fake_probability}")
+                col2.write(f"Real Probability: {fake_probability}")
 
 
 
