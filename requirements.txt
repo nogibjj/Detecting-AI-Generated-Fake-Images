@@ -14,3 +14,4 @@ umap-learn
 streamlit
 scikit-learn
 huggingface_hub
+transformers
