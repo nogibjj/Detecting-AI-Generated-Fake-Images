@@ -43,6 +43,7 @@ We have witnessed significant advancements in image-generation AI models in rece
 - cnn_model.ipynb: Train and test model using huggingface model on local.
 - mobileNetV2_visual.ipynb: Visualize MobileNetV2 model.
 - resNet_visualization.ipynb & restNet_visual.ipynb: Visualize RestNet50 using UMAP.
+- app.py: deploy the AI generator and detector using huggingface and streamlit.
 
 ### install package 
 To install the required packages, run the following command:
