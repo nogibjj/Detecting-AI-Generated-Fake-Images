@@ -19,7 +19,7 @@ Try the final webapp 🤖🤖🤖 [AI Human face generator & dectector Webapp](h
 
 ----
 Watch the project presentation video below to get more information:
-[![project intro video](pic/video.png)](https://youtu.be/JuHQ8IRsfYc).
+[![project intro video](pic/video.png)](https://youtu.be/JuHQ8IRsfYc)
 
 ----
 
