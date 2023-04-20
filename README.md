@@ -102,9 +102,8 @@ We upload the model into huggingface and deploy the model use huggingface and st
 
 * [AI image generator & Fake image detector](https://fake-image-generator-detector.streamlit.app/). To try AI-image generator and ResNet Fake image detector 
 
-    .
-# Contributing
+### Contributing
 Pull requests are welcome! If you would like to contribute to this project, please fork the repository and create a new branch for your changes. Submit a pull request when you are ready to merge your changes back into the main branch.
 
-# License
+### License
 This project is licensed under the MIT License - see the LICENSE file for details.
