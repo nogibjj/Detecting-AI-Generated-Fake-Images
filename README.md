@@ -19,12 +19,14 @@ However, the use of AI-generated images raises important questions about the eth
 To install the required packages, run the following command:
 
 > make install 
+
 This will install the required packages specified in the requirements.txt file.
 
 # API Key
 To use the DALL-E2 API, you will need to obtain an API key from OpenAI. Once you have an API key, create a .env file in the root directory of the project and add the following line:
 
 > touch .env
+
 > OPENAI_API_KEY = "YOUR_OPENAI_API_KEY"
 
 
