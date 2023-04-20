@@ -73,7 +73,7 @@ We see from the below plot that similar images (faces with similar attributes ar
 ### Dimensionality Reduction
 We also tried the images in a lower-dimensional space (2D) obtained by UMAP, which helps in identifying patterns and relations between the images. 
 
-![DimensinalityReduction](DallE2-ai-generator-scott/pic/DimensinalityReduction.png)
+![DimensinalityReduction](pic/DimensinalityReduction.png)
 
 
 ## Deployment 
