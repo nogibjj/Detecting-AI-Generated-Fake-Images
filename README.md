@@ -1,7 +1,7 @@
 # Detecting AI-Generated Fake Images
 This project generates AI images using the DALL-E2 API from OpenAI and use the generate picture to build a AI-Generated Image detector. 
 
-Try the final webapp 🤖🤖🤖 [AI Human face dectector Webapp](https://fake-image-generator-detector.streamlit.app/)
+Try the final webapp 🤖🤖🤖 [AI Human face generator & dectector Webapp](https://fake-image-generator-detector.streamlit.app/)
 ![webapp](pic/streamlit-app-2023-04-20-00-04-13.gif)
 *Note: You will need OpenAI API keys to get access. Read more [how to get Openai API](https://www.windowscentral.com/software-apps/how-to-get-an-openai-api-key) 
 
